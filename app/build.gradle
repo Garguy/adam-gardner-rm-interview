@@ -20,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField("String", "API_KEY", "\"${project.findProperty("api.key")?.toString()}\"")
     }
 
     buildTypes {
@@ -36,6 +38,7 @@ android {
         jvmTarget = '17'
     }
     buildFeatures {
+        buildConfig true
         compose true
     }
     composeOptions {
@@ -77,7 +80,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
 
     // Coil
-    implementation "io.coil-kt:coil-compose:2.2.2"
+    implementation "io.coil-kt:coil-compose:2.3.0"
 
 
     testImplementation 'junit:junit:4.13.2'
