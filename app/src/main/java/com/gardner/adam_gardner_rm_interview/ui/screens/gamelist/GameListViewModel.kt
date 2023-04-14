@@ -1,5 +1,6 @@
 package com.gardner.adam_gardner_rm_interview.ui.screens.gamelist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gardner.adam_gardner_rm_interview.data.GameRepository
@@ -17,7 +18,9 @@ class GameListViewModel @Inject constructor(private val repository: GameReposito
     
     fun searchGames(apiKey: String, query: String) {
         viewModelScope.launch {
-            val result = repository.searchGames(apiKey, query)
+            Log.d("GameViewModel", "Search query: $query")
+            val result = repository.searchGames(apiKey = apiKey, query =  query)
+            Log.d("GameViewModel", "Search result: $result")
             _games.value = result
         }
     }

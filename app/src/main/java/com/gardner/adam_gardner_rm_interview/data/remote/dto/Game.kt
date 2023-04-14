@@ -6,6 +6,6 @@ data class Game(
     val id: Long,
     val name: String,
     @Json(name = "original_url")
-    val image: String,
+    val image: String?,
     val description: String?
 )

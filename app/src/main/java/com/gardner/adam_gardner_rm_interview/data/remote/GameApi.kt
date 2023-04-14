@@ -7,9 +7,10 @@ import retrofit2.http.Query
 
 interface GameApi {
     
-    @GET("games/?format=json")
+    @GET("games/")
     suspend fun searchGames(
         @Query("api_key") apiKey: String,
-        @Query("filter") filter: String
+        @Query("filter") filter: String,
+        @Query("format") format: String = "json"
     ): Response<GameResponse>
 }

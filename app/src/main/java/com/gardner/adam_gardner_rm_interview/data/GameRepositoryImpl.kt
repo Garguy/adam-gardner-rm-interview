@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GameRepositoryImpl @Inject constructor(private val gameData: GameData) : GameRepository{
     override suspend fun searchGames(apiKey: String, query: String): List<Game> {
-        return gameData.searchGames(apiKey, query)
+        return gameData.searchGames(apiKey = apiKey, query = query)
     }
 }

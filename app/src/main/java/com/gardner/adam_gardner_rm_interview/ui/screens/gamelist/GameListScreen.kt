@@ -66,7 +66,8 @@ fun GameListScreen(
     }
     
     LaunchedEffect(query) {
-        viewModel.searchGames(BuildConfig.API_KEY, query)
+        Log.d("API KEY", BuildConfig.API_KEY)
+        viewModel.searchGames(apiKey = "9d45436f87d3848d2bdcce810bacb6df57dfd134", query)
     }
 }
 
@@ -123,7 +124,7 @@ fun GameListItem(game: Game, onItemClick: () -> Unit) {
             .padding(16.dp)
     ) {
         AsyncImage(
-            model = game.image,
+            model = game.image ?: "",
             contentDescription = game.name,
             modifier = Modifier.size(80.dp)
         )
