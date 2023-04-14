@@ -6,16 +6,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,21 +33,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.gardner.adam_gardner_rm_interview.BuildConfig
+import com.gardner.adam_gardner_rm_interview.data.ApiResult
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.ImageResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameListScreen(
     viewModel: GameListViewModel = hiltViewModel()
 ) {
-    val games by viewModel.games.collectAsState()
+    val games = viewModel.games.collectAsState()
     
     var query by remember { mutableStateOf("") }
     
@@ -55,21 +63,45 @@ fun GameListScreen(
                 .fillMaxWidth()
                 .padding(16.dp),
             hint = "Search for games",
-            onSearch = { query = it.trim() }
+            onSearch = { query = it.trim() },
+            delay = 500
         )
         
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        LazyColumn {
-            items(games) { game ->
-                GameListItem(game = game, onItemClick = { /* Handle item click */ })
+        when (val result = games.value) {
+            is ApiResult.Success -> {
+                LazyColumn {
+                    items(result.data) { game ->
+                        GameListItem(game = game, onItemClick = { /* Handle item click */ })
+                    }
+                }
+            }
+            
+            is ApiResult.Failure -> {
+                Text(
+                    text = result.message,
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                )
+            }
+            
+            is ApiResult.Loading -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
             }
         }
     }
     
     LaunchedEffect(query) {
-        Log.d("API KEY", BuildConfig.API_KEY)
-        viewModel.searchGames(apiKey = "9d45436f87d3848d2bdcce810bacb6df57dfd134", query)
+        withContext(Dispatchers.IO) {
+            Log.d("API KEY", BuildConfig.API_KEY)
+            viewModel.searchGames(apiKey = "9d45436f87d3848d2bdcce810bacb6df57dfd134", query)
+        }
     }
 }
 
@@ -77,6 +109,7 @@ fun GameListScreen(
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = "",
+    delay: Long,
     onSearch: (String) -> Unit = {}
 ) {
     var text by remember {
@@ -84,6 +117,11 @@ fun SearchBar(
     }
     var isHintDisplayed by remember {
         mutableStateOf(hint != "")
+    }
+    
+    LaunchedEffect(text) {
+        delay(delay)
+        onSearch(text.trim())
     }
     
     Box(modifier = modifier) {
@@ -118,25 +156,35 @@ fun SearchBar(
 
 @Composable
 fun GameListItem(game: Game, onItemClick: () -> Unit) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onItemClick)
-            .padding(16.dp)
-    ) {
-        AsyncImage(
-            model = game.image?.originalUrl,
-            contentDescription = game.name,
-            modifier = Modifier.size(80.dp)
-        )
-        
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = game.name,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(start = 16.dp)
-        )
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onItemClick)
+                .padding(16.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            )
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AsyncImage(
+                    model = game.image?.originalUrl,
+                    contentDescription = game.name,
+                    modifier = Modifier
+                        .size(96.dp)
+                        .padding(16.dp)
+                        .aspectRatio(1f),
+                    contentScale = ContentScale.Crop,
+                )
+                
+                Text(
+                    text = game.name,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(start = 16.dp),
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
     }
 }
 
