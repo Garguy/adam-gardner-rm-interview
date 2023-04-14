@@ -6,9 +6,11 @@ import com.gardner.adam_gardner_rm_interview.data.ApiResult
 import com.gardner.adam_gardner_rm_interview.data.GameRepository
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,12 +20,14 @@ class GameListViewModel @Inject constructor(private val repository: GameReposito
     
     fun searchGames(apiKey: String, query: String) {
         viewModelScope.launch {
-            _games.value = ApiResult.Loading
-            val result = repository.searchGames(apiKey = apiKey, query = query)
-            _games.value = if (result.isNotEmpty()) {
-                ApiResult.Success(result)
-            } else {
-                ApiResult.Failure("No results found")
+            withContext(Dispatchers.IO) {
+                _games.value = ApiResult.Loading
+                try {
+                    val result = repository.searchGames(apiKey, query)
+                    _games.value = result
+                } catch (e: Exception) {
+                    _games.value = ApiResult.Failure("Failed to fetch games: ${e.message}")
+                }
             }
         }
     }
