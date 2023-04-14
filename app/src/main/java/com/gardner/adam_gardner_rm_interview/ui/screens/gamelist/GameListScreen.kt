@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -37,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.gardner.adam_gardner_rm_interview.BuildConfig
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
+import com.gardner.adam_gardner_rm_interview.data.remote.dto.ImageResult
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -124,10 +126,12 @@ fun GameListItem(game: Game, onItemClick: () -> Unit) {
             .padding(16.dp)
     ) {
         AsyncImage(
-            model = game.image ?: "",
+            model = game.image?.originalUrl,
             contentDescription = game.name,
             modifier = Modifier.size(80.dp)
         )
+        
+        Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = game.name,
             style = MaterialTheme.typography.titleLarge,
@@ -142,7 +146,7 @@ fun GameListItemPreview() {
     val game = Game(
         id = 1,
         name = "Game Name",
-        image = "https://www.example.com/image.png",
+        image = ImageResult("https://via.placeholder.com/150"),
         description = "Game Description"
     )
     GameListItem(game = game) {}
