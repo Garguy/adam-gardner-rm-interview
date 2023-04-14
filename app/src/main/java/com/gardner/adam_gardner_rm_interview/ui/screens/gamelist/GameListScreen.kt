@@ -156,12 +156,12 @@ fun SearchBar(
 
 @Composable
 fun GameListItem(game: Game, onItemClick: () -> Unit) {
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onItemClick)
-                .padding(16.dp),
+                .padding(2.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 8.dp
             )

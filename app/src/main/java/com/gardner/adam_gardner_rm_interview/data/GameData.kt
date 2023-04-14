@@ -18,7 +18,7 @@ class GameData @Inject constructor(private val api: GameApi) {
                     image = gameResult.image,
                     description = gameResult.description ?: ""
                 )
-            } ?: emptyList()
+            }?.sortedBy { it.name } ?: emptyList()
         } else {
             emptyList()
         }
