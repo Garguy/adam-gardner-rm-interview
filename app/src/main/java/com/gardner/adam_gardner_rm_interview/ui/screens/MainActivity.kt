@@ -5,21 +5,17 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.gardner.adam_gardner_rm_interview.data.GameViewModel
 import com.gardner.adam_gardner_rm_interview.ui.Routes
 import com.gardner.adam_gardner_rm_interview.ui.screens.gamedetails.GameDetailScreen
 import com.gardner.adam_gardner_rm_interview.ui.screens.gamelist.GameListScreen
-import com.gardner.adam_gardner_rm_interview.data.GameViewModel
-import com.gardner.adam_gardner_rm_interview.ui.theme.AdamgardnerrminterviewTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

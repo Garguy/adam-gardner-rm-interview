@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -32,7 +31,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.gardner.adam_gardner_rm_interview.data.GameViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun GameDetailScreen(
@@ -55,7 +53,7 @@ fun GameDetailScreen(
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
             }
-    
+            
             Spacer(modifier = Modifier.height(56.dp))
         }
         item {

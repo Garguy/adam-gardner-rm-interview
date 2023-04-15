@@ -1,6 +1,5 @@
 package com.gardner.adam_gardner_rm_interview.data
 
-import android.util.Log
 import com.gardner.adam_gardner_rm_interview.data.remote.GameApi
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import javax.inject.Inject
