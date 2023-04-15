@@ -45,7 +45,6 @@ class GameListViewModelTest {
     
     @Test
     fun `searchGames returns list of games`() = runBlocking {
-        Dispatchers.setMain(TestCoroutineDispatcher())
         
         val expectedGames = listOf(
             Game(1L, "Game 1", ImageResult("https://example.com/image1.jpg"), "Description 1"),
