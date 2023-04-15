@@ -8,10 +8,8 @@ import javax.inject.Inject
 class GameData @Inject constructor(private val api: GameApi) {
     suspend fun searchGames(apiKey: String, query: String): List<Game> {
         val response = api.searchGames(apiKey = apiKey, "name:$query")
-        Log.d("GameData", "Response: $response")
         return if (response.isSuccessful) {
             response.body()?.results?.map { gameResult ->
-                Log.d("ImageData", "Image: ${gameResult.image}")
                 Game(
                     id = gameResult.id,
                     name = gameResult.name,

@@ -18,17 +18,28 @@ class GameListViewModel @Inject constructor(private val repository: GameReposito
     private val _games = MutableStateFlow<ApiResult<List<Game>>>(ApiResult.Loading)
     val games: StateFlow<ApiResult<List<Game>>> = _games
     
+    private val gamesById = mutableMapOf<Int, Game>()
+    
     fun searchGames(apiKey: String, query: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _games.value = ApiResult.Loading
                 try {
                     val result = repository.searchGames(apiKey, query)
+                    if (result is ApiResult.Success) {
+                        result.data.forEach { game ->
+                            gamesById[game.id] = game
+                        }
+                    }
                     _games.value = result
                 } catch (e: Exception) {
                     _games.value = ApiResult.Failure("Failed to fetch games: ${e.message}")
                 }
             }
         }
+    }
+    
+    fun getGameById(gameId: Int): Game? {
+        return gamesById[gameId]
     }
 }

@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.gardner.adam_gardner_rm_interview.BuildConfig
 import com.gardner.adam_gardner_rm_interview.data.ApiResult
@@ -51,9 +52,10 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameListScreen(
-    viewModel: GameListViewModel = hiltViewModel()
+    viewModel: GameListViewModel,
+    navController: NavController
 ) {
-    val games = viewModel.games.collectAsState()
+    val gamesState = viewModel.games.collectAsState()
     
     var query by remember { mutableStateOf("") }
     
@@ -67,11 +69,17 @@ fun GameListScreen(
             delay = 500
         )
         
-        when (val result = games.value) {
+        when (val result = gamesState.value) {
             is ApiResult.Success -> {
                 LazyColumn {
                     items(result.data) { game ->
-                        GameListItem(game = game, onItemClick = { /* Handle item click */ })
+                        GameListItem(
+                            game = game,
+                            onItemClick = {
+                                navController.navigate("game_details/${game.id}") {
+                                    launchSingleTop = true
+                                }
+                            })
                     }
                 }
             }
@@ -156,7 +164,11 @@ fun SearchBar(
 
 @Composable
 fun GameListItem(game: Game, onItemClick: () -> Unit) {
-    Box(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(2.dp)
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
