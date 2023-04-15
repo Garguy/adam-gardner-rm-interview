@@ -38,11 +38,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.gardner.adam_gardner_rm_interview.BuildConfig
 import com.gardner.adam_gardner_rm_interview.data.ApiResult
+import com.gardner.adam_gardner_rm_interview.data.GameViewModel
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.ImageResult
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +52,7 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameListScreen(
-    viewModel: GameListViewModel,
+    viewModel: GameViewModel,
     navController: NavController
 ) {
     val gamesState = viewModel.games.collectAsState()

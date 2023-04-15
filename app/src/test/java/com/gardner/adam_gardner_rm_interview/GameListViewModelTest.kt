@@ -4,7 +4,7 @@ import com.gardner.adam_gardner_rm_interview.data.ApiResult
 import com.gardner.adam_gardner_rm_interview.data.GameRepository
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.ImageResult
-import com.gardner.adam_gardner_rm_interview.ui.screens.gamelist.GameListViewModel
+import com.gardner.adam_gardner_rm_interview.data.GameViewModel
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,12 +30,12 @@ class GameListViewModelTest {
     @Mock
     lateinit var repository: GameRepository
     
-    private lateinit var viewModel: GameListViewModel
+    private lateinit var viewModel: GameViewModel
     
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = GameListViewModel(repository)
+        viewModel = GameViewModel(repository)
     }
     
     @After

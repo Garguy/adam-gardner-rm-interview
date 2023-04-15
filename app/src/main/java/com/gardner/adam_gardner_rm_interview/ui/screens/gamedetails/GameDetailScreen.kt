@@ -30,14 +30,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.gardner.adam_gardner_rm_interview.ui.screens.gamelist.GameListViewModel
+import com.gardner.adam_gardner_rm_interview.data.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun GameDetailScreen(
     gameId: Int,
-    viewModel: GameListViewModel,
+    viewModel: GameViewModel,
     navController: NavController
 ) {
     val game = remember { viewModel.getGameById(gameId) }

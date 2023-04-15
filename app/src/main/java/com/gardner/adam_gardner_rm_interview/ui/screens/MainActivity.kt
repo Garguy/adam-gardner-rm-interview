@@ -18,13 +18,13 @@ import androidx.navigation.navArgument
 import com.gardner.adam_gardner_rm_interview.ui.Routes
 import com.gardner.adam_gardner_rm_interview.ui.screens.gamedetails.GameDetailScreen
 import com.gardner.adam_gardner_rm_interview.ui.screens.gamelist.GameListScreen
-import com.gardner.adam_gardner_rm_interview.ui.screens.gamelist.GameListViewModel
+import com.gardner.adam_gardner_rm_interview.data.GameViewModel
 import com.gardner.adam_gardner_rm_interview.ui.theme.AdamgardnerrminterviewTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: GameListViewModel by viewModels()
+    private val viewModel: GameViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNav(viewModel: GameListViewModel) {
+fun AppNav(viewModel: GameViewModel) {
     val navController = rememberNavController()
     
     
@@ -64,21 +64,5 @@ fun AppNav(viewModel: GameListViewModel) {
                 ).show()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AdamgardnerrminterviewTheme {
-        Greeting("Android")
     }
 }

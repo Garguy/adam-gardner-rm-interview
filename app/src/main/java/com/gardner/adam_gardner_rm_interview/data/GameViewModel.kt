@@ -1,9 +1,7 @@
-package com.gardner.adam_gardner_rm_interview.ui.screens.gamelist
+package com.gardner.adam_gardner_rm_interview.data
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gardner.adam_gardner_rm_interview.data.ApiResult
-import com.gardner.adam_gardner_rm_interview.data.GameRepository
 import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class GameListViewModel @Inject constructor(private val repository: GameRepository) : ViewModel() {
+class GameViewModel @Inject constructor(private val repository: GameRepository) : ViewModel() {
     private val _games = MutableStateFlow<ApiResult<List<Game>>>(ApiResult.Loading)
     val games: StateFlow<ApiResult<List<Game>>> = _games
     
