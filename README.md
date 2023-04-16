@@ -26,7 +26,7 @@ The Game Search App is a simple Android application that allows users to search 
 
 To get started with the Game Search App, follow these steps:
 
-1. Clone the repository to your local machine using `git clone https://github.com/<username>/game-search-app.git`.
+1. Clone the repository to your local machine
 2. Open the project in Android Studio.
 3. Build and run the project using an emulator or physical device.
 
