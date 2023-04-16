@@ -56,7 +56,7 @@ class GameListViewModelTest {
         
         viewModel.searchGames("API_KEY", "query")
         
-        // Wait for the API to "complete"
+        // Wait for search delay
         delay(500)
         
         val actualResult = viewModel.games.first()
@@ -69,7 +69,7 @@ class GameListViewModelTest {
     }
     
     @Test
-    fun `searchGames returns empty list on API error`() = runBlocking {
+    fun `searchGames returns error message on API error`() = runBlocking {
         val expectedErrorMessage = "API error occurred"
         val expectedFailureResult = ApiResult.Failure(expectedErrorMessage)
         Mockito.`when`(repository.searchGames("API_KEY", "query")).thenReturn(expectedFailureResult)

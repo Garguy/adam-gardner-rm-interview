@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.text.Html
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -46,12 +48,21 @@ fun GameDetailScreen(
             .padding(16.dp)
     ) {
         item {
-            Box(contentAlignment = Alignment.TopStart) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(
                     onClick = { navController.popBackStack() }
                 ) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
+                
+                Text(
+                    text = game?.name ?: "",
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
             }
             
             Spacer(modifier = Modifier.height(56.dp))

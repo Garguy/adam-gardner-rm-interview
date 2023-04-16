@@ -4,7 +4,7 @@ import com.gardner.adam_gardner_rm_interview.data.remote.dto.Game
 import java.io.IOException
 import javax.inject.Inject
 
-class GameRepositoryImpl @Inject constructor(private val gameData: GameData) : GameRepository {
+class GameRepositoryImpl @Inject constructor(private val gameData: GameDataSource) : GameRepository {
     override suspend fun searchGames(apiKey: String, query: String): ApiResult<List<Game>> {
         return try {
             val games = gameData.searchGames(apiKey, query)

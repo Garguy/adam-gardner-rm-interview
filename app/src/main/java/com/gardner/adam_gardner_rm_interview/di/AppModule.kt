@@ -1,6 +1,6 @@
 package com.gardner.adam_gardner_rm_interview.di
 
-import com.gardner.adam_gardner_rm_interview.data.GameData
+import com.gardner.adam_gardner_rm_interview.data.GameDataSource
 import com.gardner.adam_gardner_rm_interview.data.GameRepository
 import com.gardner.adam_gardner_rm_interview.data.GameRepositoryImpl
 import com.gardner.adam_gardner_rm_interview.data.remote.GameApi
@@ -38,7 +38,7 @@ class AppModule {
     }
     
     @Provides
-    fun provideGameRepository(dataSource: GameData): GameRepository {
+    fun provideGameRepository(dataSource: GameDataSource): GameRepository {
         return GameRepositoryImpl(dataSource)
     }
 }

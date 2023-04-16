@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GameApi {
-    
     @GET("games/")
     suspend fun searchGames(
         @Query("api_key") apiKey: String,
