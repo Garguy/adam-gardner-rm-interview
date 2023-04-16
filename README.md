@@ -6,7 +6,7 @@ The Game Search App is a simple Android application that allows users to search 
 ## Features
 
 - App loads initally list of games
-- Search for games by keyword
+- Search for games by characters to words. 
 - View details of a selected game, including the game's name, image, and description
 
 ## Technologies Used
